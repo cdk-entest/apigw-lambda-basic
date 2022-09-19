@@ -2,7 +2,7 @@ import datetime
 import time
 import json
 
-def lambda_handler(event, context) -> json:
+def handler(event, context) -> json:
     """
     simple lambda function
     """
