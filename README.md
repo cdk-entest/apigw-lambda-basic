@@ -8,7 +8,7 @@ date: 2022-07-24
 
 ## Introduction
 
-[GitHub]() this demonstrates a very basic example of integrating api gateway with a lambda function.
+[GitHub](https://github.com/cdk-entest/apigw-lambda-basic) this demonstrates a very basic example of integrating api gateway with a lambda function.
 
 - lambda handler header for proxy apigw
 - apigw and lambda integration
