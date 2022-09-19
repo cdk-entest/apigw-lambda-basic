@@ -1,14 +1,125 @@
-# Welcome to your CDK TypeScript project
+---
+title: API Gateway and Lambda Integration Basic
+description: show a very basic integration of api gateway and lambda
+author: haimtran
+publishedDate: 06/23/2022
+date: 2022-07-24
+---
 
-This is a blank project for CDK development with TypeScript.
+## Introduction
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Lambda Handler
 
-## Useful commands
+add header to work with api gw proxy integration
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+```py
+import datetime
+import time
+import json
+
+def lambda_handler(event, context) -> json:
+    """
+    simple lambda function
+    """
+
+    # time stamp
+    now = datetime.datetime.now()
+    time_stamp = now.strftime("%Y/%m/%d %H:%M:%S.%f")
+
+    # sleep
+    time.sleep(2)
+
+    return {
+        'statusCode': 200,
+        'headers': {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Methods": "OPTIONS,GET"
+        },
+        'body': json.dumps({
+            'message': f'lambda {time_stamp} {event}'
+        })
+    }
+```
+
+## Cdk Stack
+
+lambda inline function
+
+```tsx
+// lambda function
+const func = new cdk.aws_lambda.Function(this, "HelloLambdaTest", {
+  functionName: "HelloLambdaTest",
+  code: cdk.aws_lambda.Code.fromInline(
+    fs.readFileSync(path.resolve(__dirname, "./../lambda/index.py"), {
+      encoding: "utf-8",
+    })
+  ),
+  runtime: cdk.aws_lambda.Runtime.PYTHON_3_8,
+  memorySize: 512,
+  timeout: Duration.seconds(10),
+  handler: "index.handler",
+});
+```
+
+api gateway and integration with lambda
+
+```tsx
+// apigatway
+const apigw = new cdk.aws_apigateway.RestApi(this, "ApiGwDemo", {
+  restApiName: "ApiGwDemo",
+});
+
+// resource
+const resource = apigw.root.addResource("order");
+
+// method and lambda integration
+resource.addMethod("GET", new cdk.aws_apigateway.LambdaIntegration(func));
+```
+
+## Concurrency
+
+Send concurrent requests and see how lambda scale
+
+```py
+import time
+from concurrent.futures import ThreadPoolExecutor
+import boto3
+
+# function name
+FUNCTION_NAME = "HelloLambdaTest"
+
+# lambda client
+lambda_client = boto3.client("lambda")
+
+# number of concurrent request
+NUM_CONCUR_REQUEST = 100
+
+
+def invoke_lambda(id: int) -> str:
+    """
+    invoke lambda
+    """
+    res = lambda_client.invoke(
+        FunctionName=FUNCTION_NAME
+    )
+
+    print(f'lamda {id} {res["Payload"].read()}')
+    print("\n")
+    return res['Payload'].read()
+
+
+def test_scale_lambda() -> None:
+    """
+    Test how lambda scale
+    """
+    with ThreadPoolExecutor(max_workers=NUM_CONCUR_REQUEST) as executor:
+        for k in range(1, NUM_CONCUR_REQUEST):
+            executor.submit(invoke_lambda, k)
+
+
+if __name__ == "__main__":
+    while True:
+        test_scale_lambda()
+        time.sleep(5)
+```
