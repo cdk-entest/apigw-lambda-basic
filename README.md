@@ -14,6 +14,13 @@ date: 2022-07-24
 - apigw and lambda integration
 - simple test to see lambda scale concurrency
 
+<LinkedImage
+  href="https://youtu.be/16BUGFMsHlA"
+  height={400}
+  alt="apigw lambda basic"
+  src="/thumbnail/apigw-lambda-basic.png"
+/>
+
 ## Lambda Handler
 
 add header to work with api gw proxy integration
