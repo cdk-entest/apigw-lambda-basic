@@ -8,6 +8,12 @@ date: 2022-07-24
 
 ## Introduction
 
+[GitHub]() this demonstrates a very basic example of integrating api gateway with a lambda function.
+
+- lambda handler header for proxy apigw
+- apigw and lambda integration
+- simple test to see lambda scale concurrency
+
 ## Lambda Handler
 
 add header to work with api gw proxy integration
@@ -17,7 +23,7 @@ import datetime
 import time
 import json
 
-def lambda_handler(event, context) -> json:
+def handler(event, context) -> json:
     """
     simple lambda function
     """
