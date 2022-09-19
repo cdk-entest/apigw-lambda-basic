@@ -129,3 +129,8 @@ if __name__ == "__main__":
         test_scale_lambda()
         time.sleep(5)
 ```
+
+## Reference
+
+- [Lambda optmization](https://aws.amazon.com/blogs/compute/operating-lambda-performance-optimization-part-1/)
+- [Lambda re-invent 2021](https://www.youtube.com/watch?v=pqC-t1kcTL4)
