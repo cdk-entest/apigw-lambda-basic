@@ -70,7 +70,7 @@ export class ApigwDemoStack extends Stack {
     // create an apigw - prod stage
     const apiGw = new aws_apigateway.RestApi(this, "HelloApiGw", {
       restApiName: "HelloApiGw",
-
+      deploy: false,
       // deployOptions: {
       //   stageName: "prod",
       //   accessLogDestination: new aws_apigateway.LogGroupLogDestination(

@@ -12,7 +12,7 @@ def handler(event, context) -> json:
     time_stamp = now.strftime("%Y/%m/%d %H:%M:%S.%f")
 
     # sleep
-    time.sleep(2)
+    # time.sleep(2)
 
     return {
         'statusCode': 200,
