@@ -26,7 +26,8 @@ date: 2022-07-24
 
 ## Architecture
 
-![Untitled Diagram drawio](https://user-images.githubusercontent.com/20411077/204525206-02402ea0-33d2-4be2-b113-08c214900716.png)
+
+![Untitled Diagram drawio](https://user-images.githubusercontent.com/20411077/204525905-6c3706b2-011e-41b8-a6e2-be83aa13bfb4.png)
 
 
 ## Lambda Handler
