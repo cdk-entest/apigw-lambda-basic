@@ -1,12 +1,14 @@
 // haimtran 15 AUG 2022
 // add proxy option
 // add logs removal destroy
+// app waf ip rate rule
 
 import {
   aws_apigateway,
   aws_iam,
   aws_lambda,
   aws_logs,
+  aws_wafv2,
   RemovalPolicy,
   Stack,
   StackProps,
@@ -16,6 +18,8 @@ import { Construct } from "constructs";
 import * as path from "path";
 
 export class ApigwDemoStack extends Stack {
+  public readonly apiArns: string[] = [];
+
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
@@ -66,14 +70,15 @@ export class ApigwDemoStack extends Stack {
     // create an apigw - prod stage
     const apiGw = new aws_apigateway.RestApi(this, "HelloApiGw", {
       restApiName: "HelloApiGw",
-      deployOptions: {
-        stageName: "prod",
-        accessLogDestination: new aws_apigateway.LogGroupLogDestination(
-          prodLogGroup
-        ),
-        accessLogFormat:
-          aws_apigateway.AccessLogFormat.jsonWithStandardFields(),
-      },
+
+      // deployOptions: {
+      //   stageName: "prod",
+      //   accessLogDestination: new aws_apigateway.LogGroupLogDestination(
+      //     prodLogGroup
+      //   ),
+      //   accessLogFormat:
+      //     aws_apigateway.AccessLogFormat.jsonWithStandardFields(),
+      // },
     });
 
     const book = apiGw.root.addResource("book");
@@ -108,7 +113,8 @@ export class ApigwDemoStack extends Stack {
       api: apiGw,
     });
 
-    new aws_apigateway.Stage(this, "DevStage", {
+    // dev stage
+    const devStage = new aws_apigateway.Stage(this, "DevStage", {
       stageName: "dev",
       deployment,
       dataTraceEnabled: true,
@@ -118,7 +124,22 @@ export class ApigwDemoStack extends Stack {
       accessLogFormat: aws_apigateway.AccessLogFormat.jsonWithStandardFields(),
     });
 
+    // prod stage
+    const prodStage = new aws_apigateway.Stage(this, "ProdStage", {
+      stageName: "prod",
+      deployment,
+      dataTraceEnabled: true,
+      accessLogDestination: new aws_apigateway.LogGroupLogDestination(
+        prodLogGroup
+      ),
+      accessLogFormat: aws_apigateway.AccessLogFormat.jsonWithStandardFields(),
+    });
+
     // make sure this stage deployed after prod stage
     deployment.node.addDependency(book);
+
+    // store api arns
+    // this.apiArns.push(devStage.stageArn);
+    this.apiArns.push(prodStage.stageArn);
   }
 }
