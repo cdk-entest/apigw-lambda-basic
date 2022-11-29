@@ -137,6 +137,8 @@ if __name__ == "__main__":
         time.sleep(5)
 ```
 
+## Enable CloudWatch Log
+
 ## Reference
 
 - [Lambda optmization](https://aws.amazon.com/blogs/compute/operating-lambda-performance-optimization-part-1/)
