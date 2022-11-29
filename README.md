@@ -13,6 +13,9 @@ date: 2022-07-24
 - lambda handler header for proxy apigw
 - apigw and lambda integration
 - simple test to see lambda scale concurrency
+- add deployment stages
+- add access log 
+- protect api using waf 
 
 <LinkedImage
   href="https://youtu.be/16BUGFMsHlA"
@@ -20,6 +23,11 @@ date: 2022-07-24
   alt="apigw lambda basic"
   src="/thumbnail/apigw-lambda-basic.png"
 />
+
+## Architecture
+
+![Untitled Diagram drawio](https://user-images.githubusercontent.com/20411077/204525206-02402ea0-33d2-4be2-b113-08c214900716.png)
+
 
 ## Lambda Handler
 
