@@ -16,6 +16,7 @@ date: 2022-07-24
 - add deployment stages
 - add access log
 - protect api using waf
+- apigw data model and transformation, request and response mapping template
 
 <LinkedImage
   href="https://youtu.be/16BUGFMsHlA"
@@ -392,3 +393,5 @@ expected response as the response mapping template
 - [Lambda optmization](https://aws.amazon.com/blogs/compute/operating-lambda-performance-optimization-part-1/)
 - [Lambda re-invent 2021](https://www.youtube.com/watch?v=pqC-t1kcTL4)
 - [WAF protect API](https://aws.amazon.com/blogs/compute/amazon-api-gateway-adds-support-for-aws-waf/)
+- [Apigw integration timeout](https://docs.aws.amazon.com/apigateway/latest/developerguide/limits.html)
+- [Apigw mapping template](https://docs.aws.amazon.com/apigateway/latest/developerguide/rest-api-data-transformations.html)
