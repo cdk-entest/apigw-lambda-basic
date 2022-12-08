@@ -2,9 +2,13 @@
 import * as cdk from "aws-cdk-lib";
 import { ApigwLambdaBasicStack } from "../lib/apigw-lambda-basic-stack";
 import { ApigwDemoStack } from "../lib/apigw-lambda-demo-stack";
+import { ApigwLambdaTransform } from "../lib/apigw-transform-stack";
 import { WafApigwStack } from "../lib/waf-stack";
 
 const app = new cdk.App();
+
+// basic apigateway lambda transform
+new ApigwLambdaTransform(app, "ApigwLambdaTransform", {});
 
 // basic apigw lambda stack
 // new ApigwLambdaBasicStack(app, "ApigwLambdaBasicStack", {});

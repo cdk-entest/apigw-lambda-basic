@@ -14,8 +14,8 @@ date: 2022-07-24
 - apigw and lambda integration
 - simple test to see lambda scale concurrency
 - add deployment stages
-- add access log 
-- protect api using waf 
+- add access log
+- protect api using waf
 
 <LinkedImage
   href="https://youtu.be/16BUGFMsHlA"
@@ -26,9 +26,7 @@ date: 2022-07-24
 
 ## Architecture
 
-
 ![Untitled Diagram drawio](https://user-images.githubusercontent.com/20411077/204525905-6c3706b2-011e-41b8-a6e2-be83aa13bfb4.png)
-
 
 ## Lambda Handler
 
@@ -352,6 +350,42 @@ artillery quick -n 2100 --count 10 ENDPOINT
 ```
 
 then the IP will be blocked and received 403 (fobiden error) in the following requests
+
+## Api Gateway Model and Transform
+
+first example is to create a GET request and using both request, and response mapping template. Request mapping template in [TVL](https://velocity.apache.org/engine/1.7/vtl-reference.html)
+
+```json
+{
+  "id": "$input.params('userid')",
+  "name": "$input.params('username')"
+}
+```
+
+and response mapping template
+
+```json
+#set($inputRoot = $input.path('$'))
+{
+    "id": "$inputRoot.body.id",
+    "message": "$inputRoot.body.message"
+}
+```
+
+testing GET with request query parameter, print event or echo the event in lambda to see what Lambda receives from api gateway
+
+```json
+userid=111&username=haimtran
+```
+
+expected response as the response mapping template
+
+```
+{
+  "id": "",
+  "message": ""
+}
+```
 
 ## Reference
 
