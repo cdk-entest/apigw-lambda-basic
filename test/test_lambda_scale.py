@@ -8,13 +8,13 @@ from concurrent.futures import ThreadPoolExecutor
 import boto3
 
 # function name
-FUNCTION_NAME = "HelloLambda03062022"
+FUNCTION_NAME = "ProcessOrderLambda"
 
 # lambda client
 lambda_client = boto3.client("lambda")
 
 # number of concurrent request
-NUM_CONCUR_REQUEST = 100
+NUM_CONCUR_REQUEST = 101
 
 
 def invoke_lambda(id: int) -> str:
@@ -43,3 +43,4 @@ if __name__ == "__main__":
     while True:
         test_scale_lambda()
         time.sleep(5)
+bg={'green'}
