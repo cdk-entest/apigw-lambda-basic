@@ -1,0 +1,5 @@
+#set($inputRoot = $input.path('$'))
+{ 
+    "id": "$inputRoot.body.id",
+    "message": "$inputRoot.body.message"
+}
