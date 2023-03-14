@@ -70,6 +70,7 @@ export class ApigwDemoStack extends Stack {
     // create an apigw - prod stage
     const apiGw = new aws_apigateway.RestApi(this, "HelloApiGw", {
       restApiName: "HelloApiGw",
+      cloudWatchRole: true, 
       deploy: false,
       // deployOptions: {
       //   stageName: "prod",

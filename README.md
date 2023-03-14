@@ -388,6 +388,26 @@ expected response as the response mapping template
 }
 ```
 
+## Upate 
+
+setup apigw to push log to cloudwatch log group 
+
+```ts 
+const apiGw = new aws_apigateway.RestApi(this, "HelloApiGw", {
+  restApiName: "HelloApiGw",
+  cloudWatchRole: true, 
+  deploy: false,
+  // deployOptions: {
+  //   stageName: "prod",
+  //   accessLogDestination: new aws_apigateway.LogGroupLogDestination(
+  //     prodLogGroup
+  //   ),
+  //   accessLogFormat:
+  //     aws_apigateway.AccessLogFormat.jsonWithStandardFields(),
+  // },
+});
+```
+
 ## Reference
 
 - [Lambda optmization](https://aws.amazon.com/blogs/compute/operating-lambda-performance-optimization-part-1/)

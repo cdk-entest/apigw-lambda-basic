@@ -97,6 +97,15 @@ export class ApigwLambdaTransform extends Stack {
       assumedBy: new aws_iam.ServicePrincipal("apigateway.amazonaws.com"),
     });
 
+    role.addManagedPolicy(
+      aws_iam.ManagedPolicy.fromManagedPolicyArn(
+        this, 
+        "AllowApiGwPushLogToCW",
+        "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+      )
+    )
+
+
     role.addToPolicy(
       new aws_iam.PolicyStatement({
         effect: aws_iam.Effect.ALLOW,
@@ -124,6 +133,7 @@ export class ApigwLambdaTransform extends Stack {
 
     //  api gateway
     const apigw = new aws_apigateway.RestApi(this, `ApiGatewayDemo${postfix}`, {
+      cloudWatchRole: true, 
       restApiName: `apigwdemo${postfix}`,
       deploy: false,
     });
