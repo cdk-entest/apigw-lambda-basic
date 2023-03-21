@@ -344,6 +344,20 @@ const ruleLimiteRequestsThreshold: aws_wafv2.CfnWebACL.RuleProperty = {
 
 ## API WAF Test
 
+install npm and nodejs 16 for Amazon linux 2
+
+```bash 
+wget https://nodejs.org/dist/v16.0.0/
+tar -xvf node-v16.0.0-linux-x64.tar.gz
+export PATH=/home/ec2-user/node-v16.0.0-linux-x64/bin:$PATH
+```
+
+install artillery 
+
+```bash 
+npm install -g artillery
+```
+
 using [Artillery](https://www.artillery.io/), send more than 2000 requests from client using 10 threads
 
 ```bash
@@ -388,7 +402,7 @@ expected response as the response mapping template
 }
 ```
 
-## Upate 
+## Update 
 
 setup apigw to push log to cloudwatch log group 
 
