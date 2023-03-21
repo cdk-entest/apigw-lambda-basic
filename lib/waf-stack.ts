@@ -67,7 +67,7 @@ export class WafApigwStack extends Stack {
       statement: {
         // 2000 requests within 5 minutes
         rateBasedStatement: {
-          limit: 2000,
+          limit: 100,
           aggregateKeyType: "IP",
         },
       },
